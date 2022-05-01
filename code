@@ -2,12 +2,15 @@ package largestsum;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 public class LargestSum {
 
@@ -15,6 +18,8 @@ public class LargestSum {
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
         List<Integer> arr = new ArrayList();
+       
+
         Random rand=new Random();
         int num = 0;
         int randNum;
@@ -22,12 +27,12 @@ public class LargestSum {
         randNum=in.nextInt();
         System.out.println();
         
-        int blockNum;
+        int k;
         System.out.println("Type in another number for adding:");
-        blockNum= in.nextInt();
+        k=in.nextInt();
         System.out.println();
         
-        
+         int[]inputArray = new int[randNum];
         
        
        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -37,79 +42,70 @@ public class LargestSum {
            for(int g=0; g<randNum; g++)
         {
             num=rand.nextInt(100);
-         System.out.println(num);
-         arr.add(num);
+            System.out.println(num);
+            arr.add(num); //add to ListArray
+            inputArray[g]=num; //add to intArray
+            
+        
+       
+         
+        
         
         
 
                 // in here value will be written as String format
-                 output.write(String.valueOf(num));
+                 output.write(String.valueOf(arr));
                  // goes to new line if want
                  output.newLine();
+                
         }
 
-            System.out.print("Write Successful");
+          //  System.out.print("Write Successful");
             System.out.println();
         } 
         catch(IOException e1) {
             System.out.println("Error during reading/writing");
         } 
         finally 
-        {
+        {           
             output.close();
           //  in.close();
         }
-         System.out.println(arr);
-        // System.out.println("Position:");
-       // int index = in.nextInt();
-       // int indSize = arr.size()-1 ;
-       // for (int i = 0; i < arr.size(); i++) {
-       // if (index == arr.get(i)) {
-       //     System.out.print(index + " is at position " + (i+1)); // change here
-            
-      //  }
-      //  }
+         //System.out.println(arr); //print ListArray
+         System.out.println(Arrays.toString(inputArray)); //print intArray
+         	System.out.println("Largest sum with " +k+ " consecutive integers is: " +  solution(inputArray,k));
+                System.out.println();
+                System.out.println("Position:");
+        int index = in.nextInt();
+     
+        for (int i = 0; i < arr.size(); i++) {
+        if (index == arr.get(i)) {
+           System.out.print(index + " is the " + (i+1) + " number in the array"); // change here
+
+         
     }
-        public static void checkLine (String line, List arr)
+        }
+    }
+    
+    public static int solution(int[]inputArray, int k)
+    {
+        int maxSum=0;
+        int currSum=0;
+        
+        for(int i=0;i<inputArray.length; i++)
         {
-        String[] numbers = line.split(" ");
-        if (arr.size() > 1000000) { //if line contains more than 1 million integers
-                 return;
-        }
-    int sum = 0;
-    int largestSum = 0;
-
-    for (int h = 0; h < arr.size() - 1; h++) { // loops through the list
-        int currentNum = Integer.parseInt(numbers[h]);
-        int nextNum = Integer.parseInt(numbers[h + 1]);
-        if (nextNum - currentNum == 1) { // checks if numbers are consecutive
-            // check if sum is 0, which means that this is the first time a consecutive
-            // number is found
-            // example [1,2,3,4]
-            if (sum == 0) { // this will be true when currenNum is 1 and nextNum is 2
-                sum = currentNum + nextNum; // since it is the first time a consecutive number is found add both
-                                            // numbers
-            } else { // this will be executed when currenNum is 2 and nextNum is 3
-                sum += nextNum; // since it is not the first time a consecutive number is found only add the
-                                // next number, no need to add the current number since it is already added in
-                                // the above condition
+            for(int j=i;j<i+k;j++)
+            {
+                if(j==inputArray.length)
+                    break;
+                else
+                    currSum += inputArray[j];
             }
-        } else {
-            sum = 0;
+            maxSum=Math.max(currSum, maxSum);
+                currSum=0;
         }
-        if (largestSum < sum) {
-            largestSum = sum;
-        }
+        return maxSum;
     }
-
-    System.out.println(sum);
-        }
 }
 
-
-
-        
-    
-
-
-
+       
