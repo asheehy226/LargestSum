@@ -75,16 +75,11 @@ public class LargestSum {
          System.out.println(Arrays.toString(inputArray)); //print intArray
          	System.out.println("Largest sum with " +k+ " consecutive integers is: " +  solution(inputArray,k));
                 System.out.println();
-                System.out.println("Position:");
-        int index = in.nextInt();
-     
-        for (int i = 0; i < arr.size(); i++) {
-        if (index == arr.get(i)) {
-           System.out.print(index + " is the " + (i+1) + " number in the array"); // change here
+                
 
          
-    }
-        }
+    
+        
     }
     
     public static int solution(int[]inputArray, int k)
